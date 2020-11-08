@@ -1,0 +1,72 @@
+#!/bin/bash
+
+##Sources seconfig file
+. /xdisk/manojgopale/AES/dataCollection/runDir/seconfigFolder/seconfig
+echo "**************************************************************"
+
+echo "*4. First simulation to mark checkpoint"
+echo "**************************************************************"
+## Creates checkpoint for restoring in the next command based on the a[].out file and gem5 simulation as per the cache settings
+$gem5_se_no_trace -c ./a.out
+wait $!
+
+echo "**************************************************************"
+echo "*5. Restoring checkpoint"
+echo "**************************************************************"
+## Flags in the seconfig tripper the output of .bin files after this command
+$gem5_se_all -c ./a.out -r 1
+
+
+############ Was included in the scri earlier commented out because its not used anymore ###############
+
+##MSOURCE="m5/m5op_arm.o output.c aes.c"
+##MBINARY=a.out
+##MGCCOPT="-O0 -D ASM='\"$1\"'"
+##MCOMPILER="arm-linux-gnueabi-gcc-5"
+##M# . seconfig_old
+##Mecho "*****$SOURCE"
+##Mecho $gem5_se
+##Mecho "**************************************************************"
+##Mecho "*1. Cleaning files..."
+##Mecho "**************************************************************"
+##Mrm $BINARY
+##Mrm $BINARY.dynamic
+##Mrm -rf m5out
+##Mrm -f mcpat-out.xml
+##Mrm -rf ./m5out/cpt*
+##Mrm mcpat-out.xml
+##Mrm mcpat-out-pom.xml
+##Mrm power.log
+##Mecho "**************************************************************"
+##Mecho "*2. Loop unrolling"
+##Mecho "**************************************************************"
+##M./unroll_loop.py main.c
+##Mecho "**************************************************************"
+##Mecho "*3. Compiling static binary"
+##Mecho "**************************************************************"
+##M#eval "$COMPILER $GCCOPT -funroll-loops $SOURCE -static -o $BINARY"
+##M#~/gem5/build/ARM/gem5.opt --debug-flags=Exec --debug-file=my_trace.out ~/gem5/configs/example/se.py -c ./a.out
+##M#$gem5_se -c ./a.out
+##M#$gem5_se -c ./a.out -r 1
+##Mtail --pid=$! -f /dev/null
+##M#current directory
+##Mcurrent_dir=${PWD##*/}
+##Msed -n '1,/.*m5exit.*/ p' ./m5out/my_trace_all.csv > './m5out/'$current_dir'_all.csv'
+##Mtail --pid=$! -f /dev/null
+##Msed -n '1,/.*m5exit.*/ p' ./m5out/my_trace.csv > './m5out/'$current_dir'_pom.csv'
+##Mtail --pid=$! -f /dev/null
+##Mecho $current_dir'_all.csv and '+$current_dir'_pom.csv created' 
+##Mecho "**************************************************************"
+##Mecho "*7. Generate Dynamic version of binary"
+##Mecho "**************************************************************"
+##M#eval "$COMPILER $GCCOPT -funroll-loops $SOURCE -o $BINARY.dynamic"
+##M#arm-linux-gnueabi-objdump -d $BINARY.dynamic > disassm.s
+##M#tail --pid=$! -f /dev/null
+##M#eval "$COMPILER $GCCOPT -funroll-loops $SOURCE -g -o $BINARY.debug"
+##M#arm-linux-gnueabi-objdump -S -d $BINARY.debug > disassm2.s
+##M#tail --pid=$! -f /dev/null
+##M#eval "$COMPILER $GCCOPT -funroll-loops $SOURCE -o $BINARY.dynamic -static"
+##M#arm-linux-gnueabi-objdump -d $BINARY.dynamic > disassm_static.s
+##M#tail --pid=$! -f /dev/null
+##M#eval "$COMPILER $GCCOPT -funroll-loops $SOURCE -S -static"
+##M

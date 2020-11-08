@@ -1,0 +1,5 @@
+CACHE_OPTIONS="--caches --l2cache --l2_size 4MB --l2_assoc 16"
+gem5_se_no_trace="/manojwork/gem5/build/ARM/gem5.opt"
+gem5_se="/manojwork/gem5/build/ARM/gem5.opt --debug-flags=ExecTicks,ExecPOM,Cache --debug-file=my_trace.csv"
+#gem5_se_all="/manojwork/gem5/build/ARM/gem5.opt --debug-flags=Exec,ExecAll,ExecPOM,Cache --debug-file=my_trace_all.csv"
+gem5_se_all="/manojwork/gem5/build/ARM/gem5.opt --debug-flags=Exec,POMTest,POMCache,DRAMPower --debug-file=my_trace_all.csv"
